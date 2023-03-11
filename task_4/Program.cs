@@ -14,40 +14,41 @@ int inputInt(string msg)
     return 0;
 }
 
-int[,] GenerateArray (int rowCol)
+int[,] GenerateArray(int rowCol)
 {
     int[,] result = new int[rowCol, rowCol];
     int element = 0;
     int row = 0;
-    int col = 0;
-    bool isRow = true;
-
-  for (int i = 1; i <= result.GetLength(0)*result.GetLength(1); i++)
-  {
-        System.Console.WriteLine($"row={row}    col={col}   i={i}");
-        result[row, col] = i;
-        if ( col + 1 < result.GetLength(1) && result[row, col + 1] == 0 && row - 1 >=0 && result[row - 1, col] != 0)
+    int col = -1;
+    int n = result.GetLength(1); //Размер витка
+    while (element < result.Length)
+    {
+        for (int i = 0; i < n; i++)
         {
-            col++;
-            continue;
+            element++;
+            col ++;
+            result[row, col] = element;     
         }
-        if (row + 1 < result.GetLength(0) && result[row+1, col] == 0)
+        for (int i = 1; i < n; i++)
         {
-            row++;
-            continue;
+            element++;
+            row ++;
+            result[row, col] = element;
         }
-        if (col - 1 >= 0 && result[row, col - 1] == 0)
+        for (int i = 1; i < n; i++)
         {
-            col--;
-            continue;
+            element++;
+            col --;
+            result[row, col] = element;
         }
-        if (row - 1 >= 0 && result[row - 1, col] == 0)
+        for (int i = 2; i < n; i++)
         {
-            row--;
-            continue;
+            element++;
+            row --;
+            result[row, col] = element;
         }
-  }
-
+        n -= 2;
+    }
     return result;
 }
 
@@ -57,7 +58,7 @@ void printArray(int[,] array)
     {
         for (int j = 0; j < array.GetLength(1); j++)
         {
-            System.Console.Write($"{array[i, j]}\t");   
+            System.Console.Write($"{array[i, j]}\t");
         }
         System.Console.WriteLine();
     }
@@ -68,5 +69,4 @@ void printArray(int[,] array)
 int m = inputInt("Введите количество строк и столбцов квадратного массива");
 
 int[,] matrix = GenerateArray(m);
-FillArray();
 printArray(matrix);
